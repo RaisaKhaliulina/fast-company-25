@@ -7,26 +7,17 @@ import SearchStatus from "../../ui/searchStatus";
 import UserTable from "../../ui/usersTable";
 import _ from "lodash";
 import { useUser } from "../../../hooks/useUsers";
-import { useProfession } from "../../../hooks/useProfession";
+import { useProfessions } from "../../../hooks/useProfession";
 import { useAuth } from "../../../hooks/useAuth";
 const UsersListPage = () => {
     const { users } = useUser();
-   const { professions } = useProfession();
+    const { professionLoading } = useProfessions();
     const { currentUser } = useAuth();
     const [currentPage, setCurrentPage] = useState(1);
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
     const pageSize = 8;
-
-    // const [users, setUsers] = useState();
-    // useEffect(() => {
-    //     api.users.fetchAll().then((data) => setUsers(data));
-    // }, []);
-    // const handleDelete = (userId) => {
-    //     console.log(userId);
-    //     // setUsers(users.filter((user) => user._id !== userId));
-    // };
     const handleToggleBookMark = (id) => {
         const newArray = users.map((user) => {
             if (user._id === id) {
@@ -88,7 +79,7 @@ const UsersListPage = () => {
 
         return (
             <div className="d-flex">
-                {professions && (
+                { professions && professionLoading (
                     <div className="d-flex flex-column flex-shrink-0 p-3">
                         <GroupList
                             selectedItem={selectedProf}
@@ -99,7 +90,7 @@ const UsersListPage = () => {
                             className="btn btn-secondary mt-2"
                             onClick={clearFilter}
                         >
-                            Очиститть
+                            Очистить
                         </button>
                     </div>
                 )}

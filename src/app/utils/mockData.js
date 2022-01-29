@@ -5,7 +5,7 @@ import qualities from "../mockData/qualities";
 import httpService from "../services/http.service";
 
 const useMockData = () => {
-    const statusConst = {
+    const statusConsts = {
         idle: "Not started",
         pending: "In process",
         success: "Ready",
@@ -14,29 +14,29 @@ const useMockData = () => {
     const [error, setError] = useState();
     const [count, setCount] = useState(0);
     const [progress, setProgress] = useState(0);
-    const [status, setStatus] = useState(statusConst.idle);
+    const [status, setStatus] = useState(statusConsts.idle);
     const summaryCount = professions.length + users.length + qualities.length;
     const incrementCount = () => {
         setCount((prevState) => prevState + 1);
     };
-    function updateProgress() {
-        if (count !== 0 && statusConst.idle) {
-            setStatus(statusConst.pending);
+    const updateProgress = () => {
+        if (count !== 0 && statusConsts.idle) {
+            setStatus(statusConsts.pending);
         }
         const newProgress = Math.floor((count / summaryCount) * 100);
         if (progress < newProgress) {
             setProgress(() => newProgress);
         }
         if (newProgress === 100) {
-            setStatus(statusConst.success);
+            setStatus(statusConsts.success);
         }
-    }
+    };
 
     useEffect(() => {
         updateProgress();
     }, [count]);
 
-    async function initialized() {
+    async function initialize() {
         try {
             for (const prof of professions) {
                 await httpService.put("profession/" + prof._id, prof);
@@ -52,11 +52,11 @@ const useMockData = () => {
             }
         } catch (error) {
             setError(error);
-            setStatus(statusConst.error);
+            setStatus(statusConsts.error);
         }
-    }
+    };
 
-    return { error, initialized, progress, status };
+    return { error, initialize, progress, status };
 };
 
 export default useMockData;

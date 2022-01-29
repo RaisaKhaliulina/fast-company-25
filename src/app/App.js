@@ -5,10 +5,10 @@ import Users from "./layouts/users";
 import Login from "./layouts/login";
 import Main from "./layouts/main";
 import NavBar from "./components/ui/navBar";
-import LogOut from "./layouts/logAut";
+import LogOut from "./layouts/logOut";
 import { ProfessionProvider } from "./hooks/useProfession";
-import { QualityProvider } from "./hooks/useQuality";
-import { AuthProvider } from "./hooks/useAuth";
+import { QualityProvider } from "./hooks/useQualities";
+import AuthProvider from "./hooks/useAuth";
 import ProtectedRoute from "./components/common/protectedRoute";
 function App() {
     return (

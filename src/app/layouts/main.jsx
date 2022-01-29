@@ -3,9 +3,9 @@ import React from "react";
 import useMockData from "../utils/mockData";
 
 const Main = () => {
-    const { initialized, progress, status, error } = useMockData();
+    const { initialize, progress, status, error } = useMockData();
     const handleClick = () => {
-        initialized();
+        initialize();
     };
     return (
         <div className="container mt-5">

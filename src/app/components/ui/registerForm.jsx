@@ -5,8 +5,8 @@ import SelectField from "../common/form/selectField";
 import RadioField from "../common/form/radio.Field";
 import MultiSelectField from "../common/form/multiSelectField";
 import CheckBoxField from "../common/form/checkBoxField";
-import { useProfession } from "../../hooks/useProfession";
-import { useQuality } from "../../hooks/useQuality";
+import { useProfessions } from "../../hooks/useProfession";
+import { useQualities } from "../../hooks/useQualities";
 import { useAuth } from "../../hooks/useAuth";
 import { useHistory } from "react-router-dom";
 
@@ -22,21 +22,15 @@ const RegisterForm = () => {
         licence: false
     });
     const { signUp } = useAuth();
-    const { qualities } = useQuality();
+    const { qualities } = useQualities();
     const qualitiesList = qualities.map((q) => ({
         label: q.name,
         value: q._id
-        
     }));
-    console.log(qualitiesList);
-    const { professions } = useProfession();
-    const professionList = professions.map((p) => ({
-        label: p.name,
-        value: p._id
-    }));
-    console.log(professionList);
-    const [errors, setErrors] = useState({});
+    const { professions } = useProfessions();
+    const professionsList = professions.map((p) => ({ label: p.name, value: p._id }));
 
+    const [errors, setErrors] = useState({});
     const handleChange = (target) => {
         setData((prevState) => ({
             ...prevState,
@@ -44,21 +38,20 @@ const RegisterForm = () => {
         }));
     };
     const validatorConfig = {
-        name: {
-            isRequired: {
-                message: "Имя обязательно для заполнения"
-            },
-            min: {
-                message: "Имя должно состаять минимум из 2 символов",
-                value: 3
-            }
-        },
         email: {
             isRequired: {
                 message: "Электронная почта обязательна для заполнения"
             },
             isEmail: {
                 message: "Email введен некорректно"
+            }
+        },
+        name: {
+            isRequired: {
+                message: "Имя обязательно для заполнения"
+            },
+            min: {
+                message: "Имя должно состоять минимум из 3 символов"
             }
         },
         password: {
@@ -129,6 +122,7 @@ const RegisterForm = () => {
                 onChange={handleChange}
                 error={errors.email}
             />
+           
             <TextField
                 label="Пароль"
                 type="password"
@@ -141,7 +135,7 @@ const RegisterForm = () => {
                 label="Выбери свою профессию"
                 name="profession"
                 defaultOption="Choose..."
-                options={professions}
+                options={professionsList}
                 onChange={handleChange}
                 value={data.profession}
                 error={errors.profession}

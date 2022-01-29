@@ -5,14 +5,14 @@ import qualityService from "../services/quality.service";
 
 const QualityContext = React.createContext();
 
-export const useQuality = () => {
+export const useQualities = () => {
     return useContext(QualityContext);
 };
 
 export const QualityProvider = ({ children }) => {
     const [qualities, setQualities] = useState([]);
     const [error, setError] = useState(null);
-    const [isLoading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
         if (error !== null) {
             toast(error);
@@ -27,9 +27,9 @@ export const QualityProvider = ({ children }) => {
         try {
             const { content } = await qualityService.get();
             setQualities(content);
-            setLoading(false);
+            setIsLoading(false);
         } catch (error) {
-            errorsCatcher(error);
+            errorCatcher(error);
         }
     }
     function getQualitiesListFilter(items) {
@@ -40,10 +40,10 @@ export const QualityProvider = ({ children }) => {
         }
         return arr;
     }
-    function errorsCatcher(error) {
+    function errorCatcher(error) {
         const { message } = error.response.data;
         setError(message);
-        setLoading(false);
+        setIsLoading(false);
     }
 
     return (

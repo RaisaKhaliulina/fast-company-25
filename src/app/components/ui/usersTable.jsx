@@ -11,7 +11,6 @@ const UserTable = ({
     onSort,
     selectedSort,
     onToggleBookMark,
-    onDelete,
     ...rest
 }) => {
     const columns = {
@@ -62,7 +61,6 @@ UserTable.propTypes = {
     onSort: PropTypes.func.isRequired,
     selectedSort: PropTypes.object.isRequired,
     onToggleBookMark: PropTypes.func.isRequired,
-    onDelete: PropTypes.func.isRequired
 };
 
 export default UserTable;
