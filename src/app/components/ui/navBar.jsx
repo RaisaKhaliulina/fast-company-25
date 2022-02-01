@@ -13,28 +13,28 @@ const NavBar = () => {
                             Main
                         </Link>
                     </li>
-                    { currentUser && (
-                    <li className="nav-item">
+                    {currentUser &&
+                        <Link className="nav-link " aria-current="page"
+                                to="/users"
+                            >
+                                Users
+                        </Link>}
+                </ul>
+                <div className="d-flex align-items-center">
+                    {currentUser ? (
+                        <NavProfile />
+                    ) : (
                         <Link
-                            className="nav-link "
-                            aria-current="page"
-                            to="/users"
-                        >
-                            Users
-                        </Link>
-                    </li>
-                )} </ul>
-                <div className="d-flex">
-                    { currentUser ? (<NavProfile />) : <Link
                             className="nav-link "
                             aria-current="page"
                             to="/login"
                         >
                             Login
                         </Link>
-                    }
+                    )}
                 </div>
-            </div> </nav>
+            </div>
+        </nav>
     );
 };
 

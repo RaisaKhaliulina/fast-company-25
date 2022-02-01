@@ -7,13 +7,12 @@ import { useHistory } from "react-router-dom";
 
 const LoginForm = () => {
     const history = useHistory();
-    
     const [data, setData] = useState({
         email: "",
         password: "",
         stayOn: false
     });
-    const { login } = useAuth();
+    const { logIn } = useAuth();
     const [errors, setErrors] = useState({});
     const [enterError, setEnterError] = useState(null);
     const handleChange = (target) => {
@@ -25,10 +24,27 @@ const LoginForm = () => {
     };
 
     const validatorConfig = {
-        email: { isRequired: { message: "Электронная почта обязательна для заполнения" } },
-        password: { isRequired: { message: "Пароль обязателен для заполнения" } }
+        email: {
+            isRequired: {
+                message: "Электронная почта обязательна для заполнения"
+            },
+            isEmail: { message: "Email введен некорректно" }
+        },
+        password: {
+            isRequired: { message: "Пароль обязателен для заполнения" },
+            isCapitalSymbol: {
+                message: "Пароль должен содержать хотя бы одну заглавную букву"
+            },
+            isContainDigit: {
+                message: "Пароль должен содержать хотя бы одно число"
+            },
+            min: {
+                message: "Пароль должен состаять миниму из 8 символов",
+                value: 8
+            }
+        }
     };
-        useEffect(() => {
+    useEffect(() => {
         validate();
     }, [data]);
     const validate = () => {
@@ -43,17 +59,17 @@ const LoginForm = () => {
         const isValid = validate();
         if (!isValid) return;
         try {
-            await login(data);
+            await logIn(data);
             history.push(
                 history.location.state
-                ? history.location.state.from.pathname
-                : "/"
+                    ? history.location.state.from.pathname
+                    : "/"
             );
         } catch (error) {
             setEnterError(error.message);
         }
     };
-    
+
     return (
         <form onSubmit={handleSubmit}>
             <TextField
@@ -78,7 +94,7 @@ const LoginForm = () => {
             >
                 Оставаться в системе
             </CheckBoxField>
-            {enterError && <p className = "text-danger">{enterError}</p>}
+            {enterError && <p className="text-danger">{enterError}</p>}
             <button
                 type="submit"
                 disabled={!isValid || enterError}

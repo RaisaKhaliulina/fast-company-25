@@ -13,7 +13,7 @@ const NavProfile = () => {
             <div className="btn dropdown-toggle d-flex align-items-center">
                 <div className="me-2">{currentUser.name}</div>
                 <img
-                    src={ currentUser.image }
+                    src={currentUser.image}
                     alt=""
                     className="img-responsive rounded-circle"
                     width="40"
@@ -22,9 +22,7 @@ const NavProfile = () => {
             </div>
             <div className={"w-100 dropdown-menu" + (isOpen ? " show" : "")}>
                 <Link
-                    to={
-                        `/users/${currentUser._id}`
-                    }
+                    to={`/users/${currentUser._id}`}
                     className="dropdown-item"
                 >
                     Profile

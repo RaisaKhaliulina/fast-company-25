@@ -5,7 +5,7 @@ import SelectField from "../common/form/selectField";
 import RadioField from "../common/form/radio.Field";
 import MultiSelectField from "../common/form/multiSelectField";
 import CheckBoxField from "../common/form/checkBoxField";
-import { useProfessions } from "../../hooks/useProfession";
+import { useProfession } from "../../hooks/useProfession";
 import { useQualities } from "../../hooks/useQualities";
 import { useAuth } from "../../hooks/useAuth";
 import { useHistory } from "react-router-dom";
@@ -27,8 +27,11 @@ const RegisterForm = () => {
         label: q.name,
         value: q._id
     }));
-    const { professions } = useProfessions();
-    const professionsList = professions.map((p) => ({ label: p.name, value: p._id }));
+    const { professions } = useProfession();
+    const professionList = professions.map((p) => ({
+        label: p.name,
+        value: p._id
+    }));
 
     const [errors, setErrors] = useState({});
     const handleChange = (target) => {
@@ -122,7 +125,7 @@ const RegisterForm = () => {
                 onChange={handleChange}
                 error={errors.email}
             />
-           
+
             <TextField
                 label="Пароль"
                 type="password"
@@ -135,7 +138,7 @@ const RegisterForm = () => {
                 label="Выбери свою профессию"
                 name="profession"
                 defaultOption="Choose..."
-                options={professionsList}
+                options={professionList}
                 onChange={handleChange}
                 value={data.profession}
                 error={errors.profession}

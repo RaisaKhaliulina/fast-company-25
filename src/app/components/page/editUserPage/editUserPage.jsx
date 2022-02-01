@@ -6,7 +6,7 @@ import SelectField from "../../common/form/selectField";
 import RadioField from "../../common/form/radio.Field";
 import MultiSelectField from "../../common/form/multiSelectField";
 import BackHistoryButton from "../../common/backButton";
-import { useProfessions } from "../../../hooks/useProfession";
+import { useProfession } from "../../../hooks/useProfession";
 import { useQualities } from "../../../hooks/useQualities";
 import { useAuth } from "../../../hooks/useAuth";
 const EditUserPage = () => {
@@ -19,8 +19,8 @@ const EditUserPage = () => {
         sex: "male",
         qualities: []
     });
-    const { professions } = useProfessions();
-    const professionsList = professions.map((p) => ({
+    const { professions } = useProfession();
+    const professionList = professions.map((p) => ({
         label: p.name,
         value: p._id
     }));
@@ -139,7 +139,7 @@ const EditUserPage = () => {
                                 label="Выбери свою профессию"
                                 defaultOption="Choose..."
                                 name="profession"
-                                options={professionsList}
+                                options={professionList}
                                 onChange={handleChange}
                                 value={data.profession}
                                 error={errors.profession}
